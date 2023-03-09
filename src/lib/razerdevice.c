@@ -174,6 +174,7 @@ bool is_mouse_mat(IOUSBDeviceInterface **usb_dev)
 	case USB_DEVICE_ID_RAZER_FIREFLY_V2:
 	case USB_DEVICE_ID_RAZER_GOLIATHUS_CHROMA:
 	case USB_DEVICE_ID_RAZER_GOLIATHUS_CHROMA_EXTENDED:
+	case USB_DEVICE_ID_RAZER_GOLIATHUS_CHROMA_3XL:
 		return true;
 	}
 
@@ -195,12 +196,12 @@ bool is_egpu(IOUSBDeviceInterface **usb_dev)
 }
 
 
-bool is_headphone(IOUSBDeviceInterface **usb_dev) 
+bool is_headphone(IOUSBDeviceInterface **usb_dev)
 {
     UInt16 product = -1;
     (*usb_dev)->GetDeviceProduct(usb_dev, &product);
 
-    switch (product) 
+    switch (product)
     {
         case USB_DEVICE_ID_RAZER_KRAKEN_KITTY_EDITION:
         case USB_DEVICE_ID_RAZER_KRAKEN_V2:
@@ -282,39 +283,39 @@ IOUSBDeviceInterface **getRazerUSBDeviceInterface(int type)
 			continue;
 		}
 
-		switch (type) 
+		switch (type)
         {
 			case TYPE_KEYBOARD:
 			case TYPE_BLADE:
 				// Filter out non-keyboards and non-blade laptops
-				if (!(is_keyboard(dev) || is_blade_laptop(dev))) 
+				if (!(is_keyboard(dev) || is_blade_laptop(dev)))
                 {
 					(*dev)->Release(dev);
 					continue;
 				}
 				break;
-        
+
 			case TYPE_MOUSE:
 				// Filter out non-mice
-				if (!is_mouse(dev)) 
+				if (!is_mouse(dev))
                 {
 					(*dev)->Release(dev);
 					continue;
 				}
 				break;
-        
+
 			case TYPE_MOUSE_DOCK:
 				// Filter out non-mice-mats
-				if (!is_mouse_dock(dev)) 
+				if (!is_mouse_dock(dev))
                 {
 					(*dev)->Release(dev);
 					continue;
 				}
 				break;
-        
+
 			case TYPE_MOUSE_MAT:
 				// Filter out non-mice-mats
-				if (!is_mouse_mat(dev)) 
+				if (!is_mouse_mat(dev))
                 {
 					(*dev)->Release(dev);
 					continue;
@@ -344,7 +345,7 @@ IOUSBDeviceInterface **getRazerUSBDeviceInterface(int type)
                     continue;
                 }
                 break;
-        
+
 		    default:
 			    // Unsupported Razer peripheral type
 			    (*dev)->Release(dev);
